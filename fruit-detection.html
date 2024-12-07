@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit/Vegetable Detection</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Freshness Detection</h1>
+            <nav>
+                <ul class="nav-sections">
+                    <li><a href="index.html" class="button">Home</a></li>
+                    <li><a href="ocr.html" class="button">OCR Scanning</a></li>
+                    <li><a href="image-recognition.html" class="button">Product Recognition</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="fruit-detection-section">
+            <h2>Check Freshness of Fruits & Vegetables</h2>
+            <p>Upload an image or capture one using your camera to detect the ripeness and quality of the product.</p>
+
+            <!-- File Upload -->
+            <div class="file-upload">
+                <label for="fruit-file-input" class="button primary-button">Upload Image</label>
+                <input type="file" id="fruit-file-input" accept="image/*" onchange="showUploadedFruitFile(event)" />
+            </div>
+            <div id="fruit-image-preview"></div>
+
+            <!-- Camera Capture Section -->
+            <h3>Capture Image from Camera</h3>
+            <div class="camera-section">
+                <button class="button primary-button" onclick="startCamera()">Open Camera</button>
+                <video id="fruit-video" autoplay playsinline></video>
+                <canvas id="fruit-canvas" style="display:none;"></canvas>
+                <button class="button secondary-button" onclick="captureFruitImage()">Capture Image</button>
+            </div>
+
+            <div id="fruit-result">
+                <h3>Product Result:</h3>
+                <p id="fruit-name">Product Name: <span>N/A</span></p>
+                <p id="fruit-ripeness">Ripeness Level: <span>N/A</span></p>
+                <p id="fruit-ok">Is it good to eat? <span>N/A</span></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Leetcoders Name. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const fruitVideo = document.getElementById('fruit-video');
+        const fruitCanvas = document.getElementById('fruit-canvas');
+        const fruitName = document.getElementById('fruit-name');
+        const fruitRipeness = document.getElementById('fruit-ripeness');
+        const fruitOk = document.getElementById('fruit-ok');
+
+        function startCamera() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    fruitVideo.srcObject = stream;
+                })
+                .catch(err => {
+                    alert('Error accessing camera: ' + err.message);
+                });
+        }
+
+        function captureFruitImage() {
+            const context = fruitCanvas.getContext('2d');
+            fruitCanvas.width = fruitVideo.videoWidth;
+            fruitCanvas.height = fruitVideo.videoHeight;
+            context.drawImage(fruitVideo, 0, 0, fruitCanvas.width, fruitCanvas.height);
+
+            // Simulate fruit detection logic
+            fruitName.querySelector('span').innerText = 'Apple';
+            fruitRipeness.querySelector('span').innerText = 'Ripe';
+            fruitOk.querySelector('span').innerText = 'Yes';
+        }
+
+        function showUploadedFruitFile(event) {
+            const imagePreview = document.getElementById('fruit-image-preview');
+            imagePreview.innerHTML = '';
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.alt = 'Uploaded Image';
+                img.classList.add('uploaded-image');
+                imagePreview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>

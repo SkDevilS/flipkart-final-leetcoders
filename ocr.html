@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Scanning</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>OCR Scanning</h1>
+            <nav>
+                <ul class="nav-sections">
+                    <li><a href="index.html" class="button">Home</a></li>
+                    <li><a href="image-recognition.html" class="button">Product Recognition</a></li>
+                    <li><a href="fruit-detection.html" class="button">Freshness Detection</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="ocr-section">
+            <h2>Optical Character Recognition (OCR)</h2>
+            <p>This section demonstrates how OCR technology extracts text from images or videos with high accuracy.</p>
+
+            <!-- File Upload -->
+            <div class="file-upload">
+                <label for="ocr-file-input" class="button primary-button">Upload Image for OCR</label>
+                <input type="file" id="ocr-file-input" accept="image/*" onchange="showUploadedOCRFile(event)" />
+            </div>
+            <div id="ocr-image-preview"></div>
+
+            <!-- Camera Capture Section -->
+            <h3>Capture Image from Camera</h3>
+            <div class="camera-section">
+                <button class="button primary-button" onclick="startCamera()">Open Camera</button>
+                <video id="ocr-video" autoplay playsinline></video>
+                <canvas id="ocr-canvas" style="display:none;"></canvas>
+                <button class="button secondary-button" onclick="captureOCRImage()">Capture Image</button>
+            </div>
+
+            <div id="ocr-result">
+                <h3>OCR Result:</h3>
+                <p id="ocr-text">No text detected yet.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Leetcoders Name. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const video = document.getElementById('ocr-video');
+        const canvas = document.getElementById('ocr-canvas');
+        const ocrText = document.getElementById('ocr-text');
+
+        function startCamera() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                })
+                .catch(err => {
+                    alert('Error accessing camera: ' + err.message);
+                });
+        }
+
+        function captureOCRImage() {
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Simulate OCR extraction for demo purposes
+            ocrText.innerText = 'Detected Text: "Flipkart Grid Robotics Challenge 6.0"';
+        }
+
+        function showUploadedOCRFile(event) {
+            const imagePreview = document.getElementById('ocr-image-preview');
+            imagePreview.innerHTML = '';
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.alt = 'Uploaded Image for OCR';
+                img.classList.add('uploaded-image');
+                imagePreview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
