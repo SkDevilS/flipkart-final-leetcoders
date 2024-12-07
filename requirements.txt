@@ -1,0 +1,9 @@
+flask
+flask-socketio
+opencv-python
+torch
+torchvision
+pytesseract
+numpy
+matplotlib
+scikit-learn

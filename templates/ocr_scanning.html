@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="content-section">
+    <h2>OCR Scanning</h2>
+    <div class="camera-feed">
+        <video id="ocrVideo" autoplay></video>
+    </div>
+    <div class="output">
+        <h3>Scanned Text:</h3>
+        <textarea id="ocrText" rows="6" readonly></textarea>
+    </div>
+</section>
+<script>
+    // Add JavaScript to handle OCR real-time feed
+</script>
+{% endblock %}

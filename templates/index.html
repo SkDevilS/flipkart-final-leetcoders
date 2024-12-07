@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='static/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Smart Detection Web App</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/product-detection">Product Detection</a></li>
+                <li><a href="/ocr-scanning">OCR Scanning</a></li>
+                <li><a href="/freshness-detection">Freshness Detection</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Smart Detection App</p>
+    </footer>
+</body>
+</html>
